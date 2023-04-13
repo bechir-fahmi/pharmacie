@@ -14,9 +14,10 @@ public class ConnectionDB {
         conn = DriverManager.getConnection(url, username, password);
     }
     public ResultSet executeQuery(String sql) throws SQLException {
-        Statement statement = conn.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-        return result;
+        try (Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(sql)) {
+            return result;
+        }
     }
 
     public void close() throws SQLException {
